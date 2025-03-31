@@ -16,7 +16,7 @@ model User {
     updatedAt DateTime @updatedAt
 
     imageUrl String?
-    firtName String?
+    firstName String?
     lastName String?
 
     emailAddress String @unique
