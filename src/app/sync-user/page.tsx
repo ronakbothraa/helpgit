@@ -30,6 +30,7 @@ const SyncUser = async () => {
       lastName: user.lastName,
     },
   });
+  
   return redirect("/dashboard");
 };
 
