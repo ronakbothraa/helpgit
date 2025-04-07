@@ -4,9 +4,11 @@ import { notFound, redirect } from "next/navigation";
 
 const SyncUser = async () => {
   const { userId } = await auth();
+
   if (!userId) {
     throw new Error("User not found");
   }
+
   const clearkClient = await clerkClient();
   const user = await clearkClient.users.getUser(userId);
 
@@ -24,6 +26,7 @@ const SyncUser = async () => {
       lastName: user.lastName,
     },
     create: {
+      id: user.id,
       emailAddress: user.emailAddresses[0]?.emailAddress ?? "",
       imageUrl: user.imageUrl,
       firstName: user.firstName,
@@ -32,6 +35,7 @@ const SyncUser = async () => {
   });
   
   return redirect("/dashboard");
+
 };
 
 export default SyncUser;
