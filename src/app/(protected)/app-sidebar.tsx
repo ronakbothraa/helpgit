@@ -13,6 +13,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import useProject from "@/hooks/use-projects";
 import { cn } from "@/lib/utils";
 import {
   Bot,
@@ -47,22 +48,12 @@ const items = [
   },
 ];
 
-const Projects = [
-  {
-    name: "project 1",
-  },
-  {
-    name: "project 2",
-  },
-  {
-    name: "project 3",
-  },
-];
 
 export function AppSidebar() {
   const { open } = useSidebar();
-
   const pathname = usePathname();
+  const { projects, selectedProjectId, setProjectId } = useProject();
+
   return (
     <Sidebar collapsible="icon" variant="floating">
       <SidebarHeader>
@@ -103,15 +94,15 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Your Projects</SidebarGroupLabel>
           <SidebarMenu>
-            {Projects.map((project) => (
+            {projects?.map((project) => (
               <SidebarMenuItem key={project.name}>
                 <SidebarMenuButton asChild>
-                  <div>
+                  <div className="cursor-pointer" onClick={() => setProjectId(project.id)}>
                     <div
                       className={cn(
                         "text-primary flex size-6 items-center justify-center rounded-sm border bg-white",
                         {
-                          "bg-primary text-white": true,
+                          "bg-primary text-white": project.id === selectedProjectId,
                         },
                       )}
                     >
