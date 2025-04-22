@@ -18,7 +18,6 @@ const CreatePage = () => {
   const createProject = api.project.createProject.useMutation();
   const refetch = useRefetch()
 
-
   function onSubmit(data: FormInput) {
     createProject.mutateAsync({
       githubUrl: data.repoUrl,

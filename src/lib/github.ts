@@ -45,7 +45,7 @@ export const getCommitsHashes = async (
 };
 
 export const pollCommits = async (ProjectId: string) => {
-  const { project, githubUrl } = await fetchProjectGirhubUrl(ProjectId);
+  const { project, githubUrl } = await fetchProjectGithubUrl(ProjectId);
   const commitHashes = await getCommitsHashes(githubUrl);
 
   const unprocessedCommits = await filterUnprocessedCommits(
@@ -58,8 +58,6 @@ export const pollCommits = async (ProjectId: string) => {
       return summariseCommits(githubUrl, commit.commitHash as string);
     }),
   );
-
-  console.log("summaryResponse: ", summaryResponse);
 
   const summaries = summaryResponse.map((response) => {
     if (response.status === "fulfilled" && response.value) {
@@ -100,7 +98,7 @@ async function summariseCommits(githubUrl: string, commitHash: string) {
   return summary;
 }
 
-async function fetchProjectGirhubUrl(projectId: string) {
+async function fetchProjectGithubUrl(projectId: string) {
   const project = await db.project.findUnique({
     where: { id: projectId },
     select: {
@@ -128,5 +126,3 @@ async function filterUnprocessedCommits(
   );
   return unprocessedCommits;
 }
-
-console.log(await pollCommits("cm96t0pv00005eh0wtb3cs573"));
